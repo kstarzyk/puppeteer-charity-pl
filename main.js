@@ -38,11 +38,12 @@ async function helloWorld() {
   const browser = await puppeteer.launch({
     headless: false,
   });
-  const page = await browser.newPage();
-  await page.waitFor(15000);
+  const page = await browser.newPage();;
   for (let p of places) {
     await page.goto(p.url);
-    await page.waitFor(3000);
+    await page.waitForNavigation({
+        waitUntil: 'load',
+      });
     await page.evaluate(s => {
       document.querySelector(s).click();
     }, p.selector);
